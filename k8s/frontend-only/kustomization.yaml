@@ -1,0 +1,19 @@
+# Full stack: Postgres + Backend + Frontend.
+# Run from k8s: kubectl apply -k frontend-only
+# Then: kubectl port-forward -n fullstack-app svc/backend-service 4000:4000
+#       kubectl port-forward -n fullstack-app svc/frontend-service 3000:80
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - base/namespace.yaml
+  - base/secret.yaml
+  - base/configmap.yaml
+  - base/postgres/init-configmap.yaml
+  - base/postgres/statefulset.yaml
+  - base/postgres/service.yaml
+  - base/backend/deployment.yaml
+  - base/backend/service.yaml
+  - base/frontend/deployment.yaml
+  - base/frontend/service.yaml
+  - base/ingress.yaml

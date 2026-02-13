@@ -1,0 +1,10 @@
+# All resources live under this dir so kustomize allows the build (no paths outside postgres-only).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - base/namespace.yaml
+  - base/secret.yaml
+  - base/postgres/init-configmap.yaml
+  - base/postgres/statefulset.yaml
+  - base/postgres/service.yaml

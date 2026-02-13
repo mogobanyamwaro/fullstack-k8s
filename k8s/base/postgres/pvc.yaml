@@ -1,0 +1,13 @@
+# Note: This is optional because StatefulSet creates PVCs automatically via volumeClaimTemplates
+# Kept here for reference or if you need to manually create PVC
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-data-manual
+  namespace: fullstack-app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

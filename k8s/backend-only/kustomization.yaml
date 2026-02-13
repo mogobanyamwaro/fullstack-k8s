@@ -1,0 +1,16 @@
+# Backend + Postgres only. Backend connects to Postgres via ClusterIP (postgres-service).
+# Run from k8s: kubectl apply -k backend-only
+# Ingress: host backend.fullstack-app.local -> backend-service:4000. Add to /etc/hosts the ingress LB IP (or 127.0.0.1 if using port-forward for ingress).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - base/namespace.yaml
+  - base/secret.yaml
+  - base/configmap.yaml
+  - base/postgres/init-configmap.yaml
+  - base/postgres/statefulset.yaml
+  - base/postgres/service.yaml
+  - base/backend/deployment.yaml
+  - base/backend/service.yaml
+  - base/ingress.yaml

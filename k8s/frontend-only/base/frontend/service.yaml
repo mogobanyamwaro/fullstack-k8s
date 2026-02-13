@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: fullstack-app
+  labels:
+    app: frontend
+    tier: frontend
+spec:
+  ports:
+    - port: 3000
+      targetPort: 3000
+      name: http
+  selector:
+    app: frontend
+  type: ClusterIP

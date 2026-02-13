@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: fullstack-app
+data:
+  DB_HOST: "postgres-service"
+  DB_PORT: "5432"
+  DB_NAME: "fullstack_db"
+  NODE_ENV: "development"
+  PORT: "4000"
+  API_VERSION: "v1"
+  LOG_LEVEL: "debug"
+  # Override in overlays per env. Frontend uses this at build time; set in overlay for correct backend URL.
+  VITE_API_URL: "http://backend.fullstack-app.local"

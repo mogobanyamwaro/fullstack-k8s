@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: fullstack-dev
+
+resources:
+  - ../../base
+
+patchesStrategicMerge:
+  - patch-replicas.yaml
+  - patch-resources.yaml
+  - patch-ingress.yaml
+  - configmap.yaml
+  - secret.yaml
+
+images:
+  - name: mogobanyamwaro/nest-backend
+    newTag: dev-latest
+  - name: mogobanyamwaro/react-frontend
+    newTag: dev-latest

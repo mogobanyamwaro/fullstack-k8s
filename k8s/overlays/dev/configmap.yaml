@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: fullstack-app
+data:
+  DB_HOST: "postgres-service"
+  DB_PORT: "5432"
+  DB_NAME: "fullstack_dev"
+  NODE_ENV: "development"
+  PORT: "4000"
+  LOG_LEVEL: "debug"
+  # Frontend calls this URL for API (build with same URL or use this for runtime config if you add runtime injection)
+  VITE_API_URL: "http://backend.dev.fullstack-app.local"

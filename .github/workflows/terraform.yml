@@ -1,0 +1,45 @@
+# Terraform plan on PR; optional apply on push to main.
+# Triggers: push/PR when terraform/ changes.
+#
+# Secrets (if apply): AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+# Or use OIDC with AWS for production.
+
+name: Terraform
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'terraform/**'
+  pull_request:
+    paths:
+      - 'terraform/**'
+  workflow_dispatch:
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.5"
+
+      - name: Terraform Init
+        run: terraform init
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: us-east-1
+
+      - name: Terraform Format
+        run: terraform fmt -check -recursive
+
+      - name: Terraform Plan
+        run: terraform plan -no-color
+        continue-on-error: true

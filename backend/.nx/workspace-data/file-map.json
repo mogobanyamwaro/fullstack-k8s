@@ -1,0 +1,145 @@
+{
+  "version": "6.0",
+  "nxVersion": "22.0.4",
+  "pathMappings": {},
+  "nxJsonPlugins": [
+    {
+      "name": "@nx/nest",
+      "version": "~22.0.0"
+    }
+  ],
+  "fileMap": {
+    "projectFileMap": {},
+    "nonProjectFiles": [
+      {
+        "file": ".dockerignore",
+        "hash": "12865967008399239618"
+      },
+      {
+        "file": ".env.example",
+        "hash": "5221726321452551082"
+      },
+      {
+        "file": ".env.production",
+        "hash": "15580931942728495167"
+      },
+      {
+        "file": ".env.staging",
+        "hash": "16002831779443405589"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "8691869996817911972"
+      },
+      {
+        "file": ".prettierrc",
+        "hash": "9555875142989992828"
+      },
+      {
+        "file": "Dockerfile",
+        "hash": "12941024533589698017"
+      },
+      {
+        "file": "README.md",
+        "hash": "13408464382999289361"
+      },
+      {
+        "file": "eslint.config.mjs",
+        "hash": "18416216974229185053"
+      },
+      {
+        "file": "nest-cli.json",
+        "hash": "789240945379598733"
+      },
+      {
+        "file": "nx.json",
+        "hash": "13827158262267784094"
+      },
+      {
+        "file": "package-lock.json",
+        "hash": "1134575554588903223"
+      },
+      {
+        "file": "package.json",
+        "hash": "6023065218204992222"
+      },
+      {
+        "file": "src/app.controller.spec.ts",
+        "hash": "6820863429723628382"
+      },
+      {
+        "file": "src/app.controller.ts",
+        "hash": "4552329938751326480"
+      },
+      {
+        "file": "src/app.module.ts",
+        "hash": "13483386910708892948"
+      },
+      {
+        "file": "src/app.service.ts",
+        "hash": "16892833931858030153"
+      },
+      {
+        "file": "src/main.ts",
+        "hash": "12278776587930237836"
+      },
+      {
+        "file": "src/metrics/metrics.controller.ts",
+        "hash": "10168523079895701704"
+      },
+      {
+        "file": "src/metrics/metrics.interceptor.ts",
+        "hash": "15381444214580711186"
+      },
+      {
+        "file": "src/metrics/metrics.module.ts",
+        "hash": "11812579549203542803"
+      },
+      {
+        "file": "src/metrics/metrics.service.ts",
+        "hash": "5644185253243051850"
+      },
+      {
+        "file": "src/todo/dto/create-todo.dto.ts",
+        "hash": "4426635153678219269"
+      },
+      {
+        "file": "src/todo/dto/update-todo.dto.ts",
+        "hash": "4508445477958040612"
+      },
+      {
+        "file": "src/todo/entities/todo.entity.ts",
+        "hash": "2256531998126476738"
+      },
+      {
+        "file": "src/todo/todo.controller.ts",
+        "hash": "5732155307808201177"
+      },
+      {
+        "file": "src/todo/todo.module.ts",
+        "hash": "5424480362059334851"
+      },
+      {
+        "file": "src/todo/todo.service.ts",
+        "hash": "272210594500119921"
+      },
+      {
+        "file": "test/app.e2e-spec.ts",
+        "hash": "8576505507051754469"
+      },
+      {
+        "file": "test/jest-e2e.json",
+        "hash": "6063259469280280740"
+      },
+      {
+        "file": "tsconfig.build.json",
+        "hash": "5591257429369579519"
+      },
+      {
+        "file": "tsconfig.json",
+        "hash": "10166309608539437231"
+      }
+    ]
+  },
+  "externalNodesHash": "705302108624114756"
+}

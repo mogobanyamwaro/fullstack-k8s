@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - secret.yaml
+  - postgres/init-configmap.yaml
+  - postgres/statefulset.yaml
+  - postgres/service.yaml
+  - backend/deployment.yaml
+  - backend/service.yaml
+  - frontend/deployment.yaml
+  - frontend/service.yaml
+  - ingress/ingress.yaml
+
+# Common labels for all resources
+commonLabels:
+  managed-by: kustomize
+  environment-base: "true"
+
+# Common annotations
+commonAnnotations:
+  support: "devops@company.com"

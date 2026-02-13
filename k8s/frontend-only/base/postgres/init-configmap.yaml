@@ -1,0 +1,143 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init-scripts
+  namespace: fullstack-app
+data:
+  # Runs when Postgres container first starts (alphabetical order: init.sql then post-init.sql)
+  init.sql: |
+    -- Create additional databases for environment overlays (POSTGRES_DB already exists)
+    CREATE DATABASE fullstack_dev;
+    CREATE DATABASE fullstack_staging;
+    CREATE DATABASE fullstack_prod;
+
+    -- Apply schema in each database (script runs initially in POSTGRES_DB)
+    \c fullstack_db;
+    CREATE EXTENSION IF NOT EXISTS pgcrypto;
+    CREATE SCHEMA IF NOT EXISTS app;
+    CREATE TABLE IF NOT EXISTS roles (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      name VARCHAR(50) UNIQUE NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE TABLE IF NOT EXISTS users (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      email VARCHAR(255) UNIQUE NOT NULL,
+      password_hash VARCHAR(255) NOT NULL,
+      name VARCHAR(255),
+      role VARCHAR(50) DEFAULT 'user',
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE TABLE IF NOT EXISTS sessions (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+      token VARCHAR(255) UNIQUE NOT NULL,
+      expires_at TIMESTAMP NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
+    CREATE INDEX IF NOT EXISTS idx_sessions_token ON sessions(token);
+    CREATE INDEX IF NOT EXISTS idx_sessions_user_id ON sessions(user_id);
+
+    -- fullstack_dev
+    \c fullstack_dev;
+    CREATE EXTENSION IF NOT EXISTS pgcrypto;
+    CREATE SCHEMA IF NOT EXISTS app;
+    CREATE TABLE IF NOT EXISTS roles (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      name VARCHAR(50) UNIQUE NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE TABLE IF NOT EXISTS users (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      email VARCHAR(255) UNIQUE NOT NULL,
+      password_hash VARCHAR(255) NOT NULL,
+      name VARCHAR(255),
+      role VARCHAR(50) DEFAULT 'user',
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE TABLE IF NOT EXISTS sessions (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+      token VARCHAR(255) UNIQUE NOT NULL,
+      expires_at TIMESTAMP NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
+    CREATE INDEX IF NOT EXISTS idx_sessions_token ON sessions(token);
+    CREATE INDEX IF NOT EXISTS idx_sessions_user_id ON sessions(user_id);
+
+    -- fullstack_staging
+    \c fullstack_staging;
+    CREATE EXTENSION IF NOT EXISTS pgcrypto;
+    CREATE SCHEMA IF NOT EXISTS app;
+    CREATE TABLE IF NOT EXISTS roles (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      name VARCHAR(50) UNIQUE NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE TABLE IF NOT EXISTS users (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      email VARCHAR(255) UNIQUE NOT NULL,
+      password_hash VARCHAR(255) NOT NULL,
+      name VARCHAR(255),
+      role VARCHAR(50) DEFAULT 'user',
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE TABLE IF NOT EXISTS sessions (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+      token VARCHAR(255) UNIQUE NOT NULL,
+      expires_at TIMESTAMP NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
+    CREATE INDEX IF NOT EXISTS idx_sessions_token ON sessions(token);
+    CREATE INDEX IF NOT EXISTS idx_sessions_user_id ON sessions(user_id);
+
+    -- fullstack_prod
+    \c fullstack_prod;
+    CREATE EXTENSION IF NOT EXISTS pgcrypto;
+    CREATE SCHEMA IF NOT EXISTS app;
+    CREATE TABLE IF NOT EXISTS roles (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      name VARCHAR(50) UNIQUE NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE TABLE IF NOT EXISTS users (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      email VARCHAR(255) UNIQUE NOT NULL,
+      password_hash VARCHAR(255) NOT NULL,
+      name VARCHAR(255),
+      role VARCHAR(50) DEFAULT 'user',
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE TABLE IF NOT EXISTS sessions (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+      token VARCHAR(255) UNIQUE NOT NULL,
+      expires_at TIMESTAMP NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
+    CREATE INDEX IF NOT EXISTS idx_sessions_token ON sessions(token);
+    CREATE INDEX IF NOT EXISTS idx_sessions_user_id ON sessions(user_id);
+
+  # Post initialization (runs against POSTGRES_DB, e.g. fullstack_db)
+  post-init.sql: |
+    -- Create default roles
+    INSERT INTO roles (name) VALUES ('admin'), ('user'), ('moderator')
+    ON CONFLICT (name) DO NOTHING;
+
+    -- Create admin user for development only (change password in production!)
+    INSERT INTO users (email, password_hash, name, role)
+    VALUES (
+      'admin@example.com',
+      crypt('admin123', gen_salt('bf')),
+      'Admin User',
+      'admin'
+    ) ON CONFLICT (email) DO NOTHING;

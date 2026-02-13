@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: fullstack-app
+data:
+  DB_HOST: "postgres-service"
+  DB_PORT: "5432"
+  DB_NAME: "fullstack_staging"
+  NODE_ENV: "staging"
+  PORT: "4000"
+  LOG_LEVEL: "info"
+  VITE_API_URL: "http://backend.staging.fullstack-app.local"

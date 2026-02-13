@@ -1,0 +1,35 @@
+# Monorepo root .gitignore
+
+# Secrets and keys
+*.pem
+.env
+.env.local
+.env.*.local
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/tfplan
+terraform/*.tfvars
+!terraform/terraform.tfvars.example
+
+# Node
+node_modules/
+.nx/cache/
+
+# Build outputs
+dist/
+coverage/
+*.log
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# OS
+.DS_Store
+Thumbs.db
