@@ -4,15 +4,15 @@ Monorepo: backend (NestJS), frontend (React/Vite), Kubernetes manifests, Terrafo
 
 ## Structure
 
-```
-├── .github/workflows/    # CI/CD: backend, frontend, terraform
-├── backend/              # NestJS API
-├── frontend/             # React/Vite app
-├── k8s/                  # K8s manifests (ArgoCD watches here)
-│   ├── base/
-│   └── overlays/dev|staging|prod
-├── k8s-from-scratch/     # Cluster bootstrap (kubeadm)
-└── terraform/            # AWS infra (VPC, EC2)
+```md
+├── .github/workflows/ # CI/CD: backend, frontend, terraform
+├── backend/ # NestJS API
+├── frontend/ # React/Vite app
+├── k8s/ # K8s manifests (ArgoCD watches here)
+│ ├── base/
+│ └── overlays/dev|staging|prod
+├── k8s-from-scratch/ # Cluster bootstrap (kubeadm)
+└── terraform/ # AWS infra (VPC, EC2)
 ```
 
 ## Quick Start
