@@ -12,16 +12,14 @@ Monorepo: backend (NestJS), frontend (React/Vite), Kubernetes manifests, Terrafo
 │   ├── base/
 │   └── overlays/dev|staging|prod
 ├── k8s-from-scratch/     # Cluster bootstrap (kubeadm)
-├── terraform/            # AWS infra (VPC, EC2)
-└── docker-compose.yml    # Local dev
+└── terraform/            # AWS infra (VPC, EC2)
 ```
 
 ## Quick Start
 
-1. **Local dev:** `docker-compose up`
-2. **Infra:** `cd terraform && terraform apply`
-3. **Cluster:** See `k8s-from-scratch/README.md`
-4. **Deploy:** `./k8s/deploy.sh dev` or use ArgoCD
+1. **Infra:** `cd terraform && terraform apply`
+2. **Cluster:** See `k8s-from-scratch/README.md`
+3. **Deploy:** `./k8s/deploy.sh dev` or use ArgoCD
 
 ## CI/CD (GitHub Actions + ArgoCD)
 
